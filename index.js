@@ -10,6 +10,7 @@ require("dotenv").config({ path: "config.env" });
 
 const studentRoutes = require("./routes/student.routes");
 const adminRoutes = require("./routes/admin.routes");
+const facultyRoute = require("./routes/facultyRoute");
 
 app.use(cookieParser());
 app.use(express.json());
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 
 app.use("/student", studentRoutes);
 app.use("/admin", adminRoutes);
+app.use("/admin", facultyRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello World! check");
