@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 
 app.use("/student", studentRoutes);
 app.use("/admin", adminRoutes);
-app.use("/admin", facultyRoute);
+app.use("/faculty", facultyRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello World! check");

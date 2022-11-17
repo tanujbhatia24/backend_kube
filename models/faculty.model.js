@@ -48,5 +48,5 @@ const facultySchema = mongoose.Schema({
 })
 
 /* Model */
-const facultyLogin = new mongoose.model('facultyLogin', facultySchema)
+const facultyLogin = new mongoose.model('facultyInfo', facultySchema)
 module.exports = facultyLogin;

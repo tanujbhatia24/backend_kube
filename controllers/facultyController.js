@@ -1,7 +1,6 @@
 
 const facultyLogin = require('../models/faculty.model')
-
-//const {facultyLogin} = require("../models/faculty.model");
+  
 const crypto = require("crypto");
 const hashKey = process.env.HASH_KEY;
 const jwt = require("jsonwebtoken");
