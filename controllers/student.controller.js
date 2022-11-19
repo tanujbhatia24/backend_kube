@@ -12,20 +12,27 @@ function Register(req, res) {
     .createHash("sha256", hashKey)
     .update(req.body.password)
     .digest("hex");
-  const newStudent = new Student({ ...req.body });
-  console.log(newStudent);
-  newStudent.save(function (err, newSavedStudent) {
-    if (err) {
-      res.json({ message: "not registered", err: err }).status(200);
-    } else {
 
-        
-       
-      console.log({ newSavedStudent });
-      res.json({ message: "registered" }).status(200);
-    }
-  });
-  // res.json({message:'here'}).status(200)
+    Student.findOne({ email: req.body.email }, (err, user) => {
+        if (user) {
+          res.send({ message: "student already exist" });
+        } else {
+        const newStudent = new Student({ ...req.body });
+        console.log(newStudent);
+        newStudent.save(function (err, newSavedStudent) {
+            if (err) {
+            res.json({ message: "not registered", err: err }).status(200);
+            } else {
+
+                
+            
+            console.log({ newSavedStudent });
+            res.json({ message: "registered" }).status(200);
+            }
+        });
+        // res.json({message:'here'}).status(200)
+        }
+    })
 }
 
 

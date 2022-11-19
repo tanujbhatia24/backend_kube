@@ -4,25 +4,32 @@ const crypto = require("crypto");
 const hashKey = process.env.HASH_KEY;
 
 function adminRegister(req, res) {
+  const {email, password}  = req.body
   console.log(req.body);
   let date = new Date();
   req.body.password = crypto
     .createHash("sha256", hashKey)
     .update(req.body.password)
     .digest("hex");
-  const newAdmin = new Admin({ ...req.body });
-  console.log(newAdmin);
-  newAdmin.save(function (err, newSavedAdmin) {
-    if (err) {
-      res.json({ message: "not registered", err: err }).status(200);
+
+  Admin.findOne({ email: email }, (err, user) => {
+    if (user) {
+      res.send({ message: "admin already exist" });
     } else {
-      console.log({ newSavedAdmin });
-      res.json({ message: "registered" }).status(200);
+      const newAdmin = new Admin({ ...req.body });
+      console.log(newAdmin);
+      newAdmin.save(function (err, newSavedAdmin) {
+        if (err) {
+          res.json({ message: "not registered", err: err }).status(200);
+        } else {
+          console.log({ newSavedAdmin });
+          res.json({ message: "registered" }).status(200);
+        }
+      });
+      // res.json({message:'here'}).status(200)
     }
   });
-  // res.json({message:'here'}).status(200)
 }
-
 
 const AdminLogin = (req, res) => {
   console.log(req.body);
@@ -59,4 +66,4 @@ const AdminLogin = (req, res) => {
     });
   }
 };
-module.exports = { adminRegister , AdminLogin};
+module.exports = { adminRegister, AdminLogin };
