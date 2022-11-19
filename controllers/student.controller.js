@@ -21,13 +21,10 @@ function Register(req, res) {
         console.log(newStudent);
         newStudent.save(function (err, newSavedStudent) {
             if (err) {
-            res.json({ message: "not registered", err: err }).status(200);
+              res.json({ message: "not registered", err: err }).status(200);
             } else {
-
-                
-            
-            console.log({ newSavedStudent });
-            res.json({ message: "registered" }).status(200);
+              console.log({ newSavedStudent });
+              res.json({ message: "registered" }).status(200);
             }
         });
         // res.json({message:'here'}).status(200)
