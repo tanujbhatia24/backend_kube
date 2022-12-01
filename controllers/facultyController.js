@@ -57,7 +57,7 @@ const facultyLoginMethod = (req, res) => {
           res.status(400).send("Wrong Password");
         }
       } else {
-        res.send("Invalid User");
+        res.status(400).send("Invalid User");
       }
     });
   }
