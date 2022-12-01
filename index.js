@@ -5,6 +5,7 @@ const connect = require("./database/mongoDb");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
+const cors = require("cors");
 // require("dotenv").config();
 require("dotenv").config({ path: "config.env" });
 
@@ -17,6 +18,7 @@ const questionUploadRoute =  require("./routes/questionUpload.routes");
 app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(cors());
 
 app.use("/student", studentRoutes);
 app.use("/admin", adminRoutes);
