@@ -4,23 +4,66 @@ const crypto = require("crypto");
 const hashKey = process.env.HASH_KEY;
 
 function adminRegister(req, res) {
+  const {email, password}  = req.body
   console.log(req.body);
   let date = new Date();
   req.body.password = crypto
     .createHash("sha256", hashKey)
     .update(req.body.password)
     .digest("hex");
-  const newAdmin = new Admin({ ...req.body });
-  console.log(newAdmin);
-  newAdmin.save(function (err, newSavedAdmin) {
-    if (err) {
-      res.json({ message: "not registered", err: err }).status(200);
+
+  Admin.findOne({ email: email }, (err, user) => {
+    if (user) {
+      res.send({ message: "admin already exist" });
     } else {
-      console.log({ newSavedAdmin });
-      res.json({ message: "registered" }).status(200);
+      const newAdmin = new Admin({ ...req.body });
+      console.log(newAdmin);
+      newAdmin.save(function (err, newSavedAdmin) {
+        if (err) {
+          res.json({ message: "not registered", err: err }).status(200);
+        } else {
+          console.log({ newSavedAdmin });
+          res.json({ message: "registered" }).status(200);
+        }
+      });
+      // res.json({message:'here'}).status(200)
     }
   });
-  // res.json({message:'here'}).status(200)
 }
 
-module.exports = { adminRegister };
+const AdminLogin = (req, res) => {
+  console.log(req.body);
+  const { email, password } = req.body;
+  if (!email || !password) {
+    console.log("Please fill all the details");
+    res.send({ message: "Please fill all the details" });
+  } else {
+    Admin.findOne({ email: email }, (err, result) => {
+      if (result) {
+        req.body.password = crypto
+          .createHash("sha256", hashKey)
+          .update(req.body.password)
+          .digest("hex");
+        if (req.body.password === result.password) {
+          //create jwt token
+          let data = {
+            email: req.body.email,
+            userType: req.body.userType,
+          };
+          const jwtToken = jwt.sign(data, jwtSecretKey);
+          let resultpayload = {
+            result: result,
+            token: jwtToken,
+          };
+          // console.log(resultpayload);
+          res.send(resultpayload);
+        } else {
+          res.status(400).send("Wrong Password");
+        }
+      } else {
+        res.send("Invalid User");
+      }
+    });
+  }
+};
+module.exports = { adminRegister, AdminLogin };
