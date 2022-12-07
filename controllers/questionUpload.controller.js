@@ -10,7 +10,7 @@ const addQuestion = (req, res) => {
   Questions.findOne({ question }, async (err, que) => {
 
     if (que) {
-      res.status(400).json({ message: "Question already exist" });
+      res.status(201).json({ message: "Question already exist" });
       return;
     } else if (
       !req.body.question ||
@@ -23,7 +23,7 @@ const addQuestion = (req, res) => {
     } else {
       try {
         const val = await newQuestion.save();
-        res.status(200).json(val);
+        res.status(200).json({message:"question uploaded successfully",status:"done"});
       } catch (error) {
         res.status(400).json({ message: error.message });
       }
