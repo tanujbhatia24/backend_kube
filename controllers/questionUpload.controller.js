@@ -19,7 +19,7 @@ const addQuestion = (req, res) => {
       !req.body.sub_tag ||
       !req.body.tag_level
     ) {
-      res.status(400).json({ message: "Please fill all the details" });
+      return res.status(400).json({ message: "Please fill all the details" });
     } else {
       try {
         const val = await newQuestion.save();

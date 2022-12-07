@@ -25,6 +25,7 @@ app.use("/admin", adminRoutes);
 app.use("/careerService", careerServiceRoutes);
 app.use("/faculty", facultyRoute);
 app.use("/", questionUploadRoute)
+// app.use("/users",);
 
 app.get("/", (req, res) => {
   res.send("Hello World! check");

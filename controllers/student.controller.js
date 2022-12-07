@@ -1,6 +1,7 @@
 const Student = require("../models/student.model");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
+const { log } = require("console");
 
 const hashKey = process.env.HASH_KEY;
 const jwtSecretKey = process.env.JWT_SECRET_KEY;
@@ -68,6 +69,14 @@ const StudentLogin = (req, res) => {
     }
   };
 
+ function getAllStudent(req, res, next){
+   Student.find({}, (err, result) => {
+      console.log(result);
+      res.json({ result})
+    })
+  
+    
+  }
 
 
-module.exports = { Register, StudentLogin };
+module.exports = { Register, StudentLogin ,getAllStudent};

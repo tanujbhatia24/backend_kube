@@ -66,6 +66,16 @@ const careerServiceLogin = (req, res) => {
   }
 };
 
+function getAllCareerServices(req, res, next){
+  careerService.find({}, (err, result) => {
+     console.log(result);
+     res.json({ result})
+   })
+ 
+   
+ }
 
 
-module.exports = { careerServiceRegister , careerServiceLogin};
+
+
+module.exports = { careerServiceRegister , careerServiceLogin,getAllCareerServices};

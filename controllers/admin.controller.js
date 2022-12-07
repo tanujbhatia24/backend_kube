@@ -1,7 +1,8 @@
 const Admin = require("../models/admin.model");
 const crypto = require("crypto");
-
+const jwt = require("jsonwebtoken");
 const hashKey = process.env.HASH_KEY;
+const jwtSecretKey = process.env.JWT_SECRET_KEY;
 
 function adminRegister(req, res) {
   const {email, password}  = req.body
