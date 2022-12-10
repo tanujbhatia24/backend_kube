@@ -63,4 +63,13 @@ const facultyLoginMethod = (req, res) => {
   }
 };
 
-module.exports = { facultyRegister , facultyLoginMethod };
+function getAllFaculty(req, res, next){
+  facultyLogin.find({}, (err, result) => {
+     console.log(result);
+     res.json({ result})
+   })
+ 
+   
+ }
+
+module.exports = { facultyRegister , facultyLoginMethod,getAllFaculty };

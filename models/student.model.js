@@ -4,8 +4,7 @@ const { Schema } = mongoose;
 let studentSchema = Schema(
   {
     userId: {
-      type: Number,
-      require: true,
+      type: Number
     },
     username: {
       type: String,

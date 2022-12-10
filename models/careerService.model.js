@@ -4,8 +4,7 @@ const { Schema } = mongoose;
 let careerServiceRegisterSchema = new Schema(
   {
     userId: {
-      type: Number,
-      require: true,
+      type: Number
     },
     username: {
       type: String,

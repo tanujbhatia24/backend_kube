@@ -3,29 +3,36 @@ const crypto = require("crypto");
 
 const hashKey = process.env.HASH_KEY;
 const jwt = require("jsonwebtoken");
+const { type } = require("os");
 
 const jwtSecretKey = process.env.JWT_SECRET_KEY;
+
 const careerServiceRegister = (req, res) => {
+  console.log(req.body)
   req.body.password = crypto
     .createHash("sha256", hashKey)
     .update(req.body.password)
     .digest("hex");
-  const { email } = req.body;
-
-  careerService.findOne({ email: email }, (err, user) => {
-    if (user) {
-      res.send({ message: "user already exist" });
+    const { email, password, username,type, phone, fullname } = req.body;
+    if (!email || !password || !username || !type || !phone || !fullname) {
+      console.log("Please fill all the details");
+      res.status(400).send({ message: "Please fill all the details" });
     } else {
-      const user = new careerService({ ...req.body });
-      user.save((err) => {
-        if (err) {
-          res.send(err);
+      careerService.findOne({ email: email }, (err, user) => {
+        if (user) {
+          res.send({ message: "user already exist" });
         } else {
-          res.send({ message: "sucessfull" });
+          const user = new careerService({ ...req.body });
+          user.save((err) => {
+            if (err) {
+              res.send(err);
+            } else {
+              res.send({ message: "User created successfully" });
+            }
+          });
         }
       });
     }
-  });
 };
 
 
@@ -66,6 +73,16 @@ const careerServiceLogin = (req, res) => {
   }
 };
 
+function getAllCareerServices(req, res, next){
+  careerService.find({}, (err, result) => {
+     console.log(result);
+     res.json({ result})
+   })
+ 
+   
+ }
 
 
-module.exports = { careerServiceRegister , careerServiceLogin};
+
+
+module.exports = { careerServiceRegister , careerServiceLogin,getAllCareerServices};
