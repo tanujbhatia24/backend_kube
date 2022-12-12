@@ -52,7 +52,7 @@ const StudentLogin = (req, res) => {
                       time: Date(),
                       id: result._id
                   };
-                  const jwtToken = jwt.sign(data, jwtSecretKey);
+                  const jwtToken = jwt.sign(data, jwtSecretKey, {expiresIn: '2m'});
                   let resultpayload = {
                       result: result,
                       token: jwtToken,
