@@ -14,69 +14,69 @@ function Register(req, res) {
     .update(req.body.password)
     .digest("hex");
 
-    Student.findOne({ email: req.body.email }, (err, user) => {
-        if (user) {
-          res.send({ message: "student already exist" });
+  Student.findOne({ email: req.body.email }, (err, user) => {
+    if (user) {
+      res.json({ message: "student already exist" }).status(400);
+    } else {
+      const newStudent = new Student({ ...req.body });
+      console.log(newStudent);
+      newStudent.save(function (err, newSavedStudent) {
+        if (err) {
+          res.json({ message: "not registered", err: err }).status(200);
         } else {
-        const newStudent = new Student({ ...req.body });
-        console.log(newStudent);
-        newStudent.save(function (err, newSavedStudent) {
-            if (err) {
-              res.json({ message: "not registered", err: err }).status(200);
-            } else {
-              console.log({ newSavedStudent });
-              res.json({ message: "registered" }).status(200);
-            }
-        });
-        // res.json({message:'here'}).status(200)
+          console.log({ newSavedStudent });
+          res.json({ message: "registered" }).status(200);
         }
-    })
+      });
+      // res.json({message:'here'}).status(200)
+    }
+  });
 }
 
+const StudentLogin = async (req, res) => {
+  console.log(req.body);
+  const { email, password } = req.body;
 
-const StudentLogin = (req, res) => {
-    console.log(req.body);
-    const { email, password } = req.body;
-    if (!email || !password) {
-      console.log("Please fill all the details");
-      res.send({ message: "Please fill all the details" });
-    } else {
-      Student.findOne({ email: email }, (err, result) => {
-          if (result) {
-              req.body.password = crypto.createHash("sha256", hashKey).update(req.body.password).digest("hex");
-              if (req.body.password === result.password) {
-                  //create jwt token
-                  let data = {
-                      email: req.body.email,
-                      userType: req.body.userType,
-                      time: Date(),
-                      id: result._id
-                  };
-                  const jwtToken = jwt.sign(data, jwtSecretKey, {expiresIn: '2m'});
-                  let resultpayload = {
-                      result: result,
-                      token: jwtToken,
-                  };
-                  // console.log(resultpayload);
-                  res.send(resultpayload);
-              } else {
-                  res.status(400).send("Wrong Password");
-              }
-          } else {
-              res.send("Invalid User");
-          }
-      })
-    }
-  };
-
- function getAllStudent(req, res, next){
-   Student.find({}, (err, result) => {
-      console.log(result);
-      res.json({ result})
-    })
-  
-    
+  if (!email || !password) {
+    console.log("Please fill all the details");
+    res.send({ message: "Please fill all the details" });
+  } else {
+    await Student.findOne({ email: email }, (err, result) => {
+      if (result) {
+        req.body.password = crypto
+          .createHash("sha256", hashKey)
+          .update(req.body.password)
+          .digest("hex");
+        if (req.body.password === result.password) {
+          //create jwt token
+          let data = {
+            email: req.body.email,
+            userType: req.body.userType,
+            time: Date(),
+            id: result._id,
+          };
+          const jwtToken = jwt.sign(data, jwtSecretKey, { expiresIn: "12m" });
+          let resultpayload = {
+            result: result,
+            token: jwtToken,
+          };
+          // console.log(resultpayload);
+          res.send(resultpayload);
+        } else {
+          res.status(400).send("Wrong Password");
+        }
+      } else {
+        res.send("Invalid User");
+      }
+    });
   }
+};
 
+const getAllStudent = (req, res) => {
+  Student.find({}, (err, result) => {
+    console.log(result);
+    res.send(result);
+  });
+};
 
-module.exports = { Register, StudentLogin ,getAllStudent};
+module.exports = { Register, StudentLogin, getAllStudent };

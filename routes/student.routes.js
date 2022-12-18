@@ -7,6 +7,6 @@ const routes = express.Router();
 
 routes.post("/register", Register);
 routes.post("/login", StudentLogin);
-routes.get("/getstudent", authorization, getAllStudent);
+routes.get("/getstudent", authorization,  getAllStudent);
 
 module.exports = routes;

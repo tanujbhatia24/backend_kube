@@ -51,12 +51,12 @@ const AdminLogin = (req, res) => {
             email: req.body.email,
             userType: req.body.userType,
           };
-          const jwtToken = jwt.sign(data, jwtSecretKey, {expiresIn: '2m'});
+          const jwtToken = jwt.sign(data, jwtSecretKey, {expiresIn: '1m'});
           let resultpayload = {
             result: result,
             token: jwtToken,
           };
-          // console.log(resultpayload);
+          console.log("resultpayload" , resultpayload);
           res.send(resultpayload);
         } else {
           res.status(400).send("Wrong Password");
