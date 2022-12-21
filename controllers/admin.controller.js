@@ -37,7 +37,7 @@ const AdminLogin = (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     console.log("Please fill all the details");
-    res.send({ message: "Please fill all the details" });
+    res.json({ message: "Please fill all the details" ,login:false});
   } else {
     Admin.findOne({ email: email }, (err, result) => {
       if (result) {
