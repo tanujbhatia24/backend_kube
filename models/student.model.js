@@ -3,6 +3,10 @@ const { Schema } = mongoose;
 
 let studentSchema = Schema(
   {
+    batchName: {
+      type: String,
+      require: true
+    },
     userId: {
       type: Number
     },

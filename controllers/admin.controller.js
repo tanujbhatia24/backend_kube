@@ -51,7 +51,7 @@ const AdminLogin = (req, res) => {
             email: req.body.email,
             userType: req.body.userType,
           };
-          const jwtToken = jwt.sign(data, jwtSecretKey, {expiresIn: '1m'});
+          const jwtToken = jwt.sign(data, jwtSecretKey, {expiresIn: '12m'});
           let resultpayload = {
             result: result,
             token: jwtToken,

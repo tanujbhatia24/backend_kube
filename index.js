@@ -14,7 +14,9 @@ const adminRoutes = require("./routes/admin.routes");
 const careerServiceRoutes = require("./routes/careerService.routes");
 const facultyRoute = require("./routes/facultyRoute");
 const questionUploadRoute =  require("./routes/questionUpload.routes");
-
+const batchRegisterRoute = require("./routes/batchRegister.route")
+const getBatchRoute = require("./routes/common.route");
+const attendanceRoute = require("./routes/attendance.routes")
 app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
@@ -24,7 +26,11 @@ app.use("/student", studentRoutes);
 app.use("/admin", adminRoutes);
 app.use("/careerService", careerServiceRoutes);
 app.use("/faculty", facultyRoute);
+app.use("/", getBatchRoute);
 app.use("/", questionUploadRoute)
+app.use("/batch" , batchRegisterRoute)
+app.use("/attendance" , attendanceRoute)
+
 // app.use("/users",);
 
 app.get("/", (req, res) => {

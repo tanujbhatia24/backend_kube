@@ -16,7 +16,7 @@ function Register(req, res) {
 
   Student.findOne({ email: req.body.email }, (err, user) => {
     if (user) {
-      res.json({ message: "student already exist" }).status(400);
+      res.status(400).json({ message: "student already exist" });
     } else {
       const newStudent = new Student({ ...req.body });
       console.log(newStudent);
@@ -72,11 +72,6 @@ const StudentLogin = async (req, res) => {
   }
 };
 
-const getAllStudent = (req, res) => {
-  Student.find({}, (err, result) => {
-    console.log(result);
-    res.send(result);
-  });
-};
 
-module.exports = { Register, StudentLogin, getAllStudent };
+
+module.exports = { Register, StudentLogin };
