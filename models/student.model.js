@@ -3,9 +3,12 @@ const { Schema } = mongoose;
 
 let studentSchema = Schema(
   {
+    batchName: {
+      type: String,
+      require: true
+    },
     userId: {
-      type: Number,
-      require: true,
+      type: Number
     },
     username: {
       type: String,

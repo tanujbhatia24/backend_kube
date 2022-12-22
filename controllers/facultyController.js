@@ -46,7 +46,7 @@ const facultyLoginMethod = (req, res) => {
             email: req.body.email,
             userType: req.body.userType,
           };
-          const jwtToken = jwt.sign(data, jwtSecretKey);
+          const jwtToken = jwt.sign(data, jwtSecretKey, {expiresIn: '2m'});
           let resultpayload = {
             result: result,
             token: jwtToken,

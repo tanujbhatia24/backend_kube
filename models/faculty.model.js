@@ -2,8 +2,7 @@ const mongoose = require('mongoose')
 
 const facultySchema = mongoose.Schema({
     userId: {
-		type: Number,
-		require: true
+		type: Number
 	},
 	username: {
 		type: String,

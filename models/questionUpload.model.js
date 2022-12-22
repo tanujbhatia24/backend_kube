@@ -8,7 +8,8 @@ let questionUploadSchema = new Schema(
       require: true,
     },
     question_title:{
-        type: String
+        type: String,
+        require: true
     },
     total_marks: {
       type: Number,
