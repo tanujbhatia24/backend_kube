@@ -5,6 +5,6 @@ const authorization = require("../middlewares/middleware");
 
 routes.post("/register", careerService.careerServiceRegister);
 routes.post("/login", careerService.careerServiceLogin);
-routes.get("/getcareer", authorization, careerService.getAllCareerServices);
+routes.get("/getcareer",  careerService.getAllCareerServices);
 
 module.exports = routes;

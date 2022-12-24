@@ -42,9 +42,6 @@ let studentSchema = Schema(
     courseName: {
       type: String,
     },
-    batch: {
-      type: String,
-    },
     yearOfExp: {
       type: Number,
     },

@@ -5,6 +5,6 @@ const authorization = require("../middlewares/middleware");
 
 routes.post("/register", faculty.facultyRegister);
 routes.post("/login", faculty.facultyLoginMethod);
-routes.get("/getfaculty", authorization, faculty.getAllFaculty);
+routes.get("/getfaculty", faculty.getAllFaculty);
 
 module.exports = routes;
